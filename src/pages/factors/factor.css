@@ -1,0 +1,14 @@
+.row{
+    display: flex;
+    flex-direction: column;
+}
+.row1{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.row2{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
