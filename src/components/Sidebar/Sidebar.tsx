@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
   ViewQuilt as ViewQuiltIcon,
-  ArrowBack as ArrowBackIcon
+  ArrowBack as ArrowBackIcon,
+  AddCircle as AddCircleIcon
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -27,9 +28,6 @@ import { getAuth } from '../../redux/AuthRedux';
 function Sidebar({ location }: { location: any }) {
   const dic = useSelector((state: any) => getDictionary(state.dictionary));
   const auth = useSelector((state: any) => getAuth(state.AuthRedux));
-  var permissions = [];
-  var role = -1;
-
 
   var classes = useStyles() as any;
   var theme = useTheme() as any;
@@ -58,8 +56,16 @@ function Sidebar({ location }: { location: any }) {
       id: 3,
       label:"فاکتور",
       showMenu: true,
-      link: "/app/dasboard",
+      link: "/app/factor",
       icon: <ViewQuiltIcon />,
+      
+    },
+    {
+      id: 4,
+      label:"محصول جدید",
+      showMenu: true,
+      link: "/app/factor/create",
+      icon: <AddCircleIcon />,
       
     },
    
