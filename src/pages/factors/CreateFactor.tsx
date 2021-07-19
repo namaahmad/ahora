@@ -1,148 +1,156 @@
 
-import React from 'react'
-import {
-    Grid, Button, Typography, TextField, Paper, Divider, Avatar, InputLabel, Fab, Switch
-} from '@material-ui/core';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import "./createFactor.css"
+import logo from "../../img/logo.png";
+import { useEffect, useState } from "react";
+import { getList } from "../../utils/dataProvider";
 import Loader from '../../components/Widget/Loader';
-import { toast } from "react-toastify";
-import { Post, PostForm } from '../../utils/dataProvider';
-import { getDictionary } from '../../redux/DictionaryRedux';
-import { History, LocationState } from "history";
-import { RouteComponentProps } from 'react-router';
-import { getAuth, UserInfo } from '../../redux/AuthRedux';
-import PageTitle from "../../components/PageTitle/PageTitle";
-interface Iprops {
-    history: History<LocationState>;
-    match: match<RouteComponentProps>;
-}
-interface IState {
-    name: string,
-    quantity: number,
-    price: number,
-    isLoading: boolean,
-}
-export interface match<P> {
-    params: P;
-    isExact: boolean;
-    path: string;
-    url: string;
-}
-class CreateFactor extends React.Component<Iprops, IState> {
-    dic: any;
-    static propTypes = {}
-    constructor(props: any) {
-        super(props);
-        this.dic = props.Dic;
-        this.state = {
-            name: '',
-            quantity: 0,
-            price: 0,
-            isLoading: false,
-        }
-    }
-    componentWillMount() {
-     
-
-    }
-
-
-    handleChange = (e: any) => {
-
-        if (e.target.type == "checkbox") {
-            this.setState({ [e.target.name]: e.target.checked } as Pick<IState, keyof IState>);
-        }
-        else
-            this.setState({ [e.target.name]: e.target.value } as Pick<IState, keyof IState>)
-    };
-    stateToFormdata() {
-        const form = new FormData();
-        Object.keys(this.state).map(key => {
-            let value = this.state as any;
-            form.append(key, value[key]);
-        })
-
-        return form;
-    }
-    handleSubmit = (e: any) => {
-        e.preventDefault();
-       
-        this.setState({ isLoading: true });
-        let body = this.stateToFormdata();
-
-
-        PostForm('api/products', body).then((result: any) => {
-            this.setState({ isLoading: false });
-            if (result && result.data) {
-                this.props.history.replace('/app/factor');
-            } else {
-                toast.error(this.dic.error_register_data);
+export default function Factor(props: any) {
+    const [productList, setProductsList] = useState([]);
+    const [isLoading, setIsloading] = useState(true);
+    const LoadProducts = () => {
+        getList('api/products', {}).then((response: any) => {
+            setIsloading(false)
+            let data = response.data;
+            if (data && Array.isArray(data.items)) {
+                setProductsList(data.items);
             }
         })
-
-
-
+    }
+    const SubTotal = () => {
+        let sum = 0;
+        productList.forEach((item: any) => {
+            sum += (item.quantity * item.price)
+        })
+        return sum;
     }
 
-    handleUploadClick = (event: any) => {
-        let file = event.target.files[0];
-        let name = event.target.name;
-        if (file) {
-            file.react_url = URL.createObjectURL(file);
-            this.setState({ [name + "Src"]: file.react_url } as Pick<IState, keyof IState>)
-            this.setState({ [name]: file } as Pick<IState, keyof IState>)
-        }
-    }
-    render() {
-        return (this.state.isLoading ? (<Loader />) :
-            <>
-                <PageTitle title="Create Product" />
-                <Paper >
+    useEffect(function () {
+        LoadProducts();
+    }, []);
+    return isLoading ? (<Loader />) :
+        (<div className="row" >
+            <div className="row1">
+                <img src={logo} />
+                <h1>Invoice</h1>
 
-                    <form onSubmit={this.handleSubmit} autoComplete="off" >
-                        <Grid container spacing={3} justifyContent="center">
-                            <Grid item xs={8} md={8} >
-                                <TextField name="name" onChange={this.handleChange} label="name"
-                                    fullWidth value={this.state.name ? this.state.name : ''}
-                                    inputProps={{ required: true }} />
-                            </Grid>
-                            <Grid item xs={8} md={8} >
-                                <TextField type="number" name="price" onChange={this.handleChange} label="price"
-                                    fullWidth value={this.state.price}
-                                    inputProps={{ required: true }} />
-                            </Grid>
-                            <Grid item xs={8} md={8} >
-                                <TextField type="number" name="quantity" onChange={this.handleChange} label="quantity"
-                                    fullWidth value={this.state.quantity}
-                                    inputProps={{ required: true }} />
-                            </Grid>
-                           
-                          
-                            <Divider />
+            </div>
+            <div className="row2">
+                <div className="row21">
 
-                            <Grid item xs={8} md={8} >
-                                <Button type="submit" variant="outlined" color="primary"  >
-                                   Register
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </Paper>
-            </>
-        )
+                    <div> For </div>
+                    <div className="row22Name">Client Name</div>
+                    <div > name@Customer.com</div>
+                    <div > 34 Customer Street</div>
+                    <div > City</div>
+                    <div > Country</div>
+                </div>
+                <div className="row22">
+                    <div> from </div>
+                    <div className="row22Name"> John Smith</div>
+                    <div > name@Compnay.com</div>
+                    <div > 12 Company Street</div>
+                    <div > City</div>
+                    <div > Country</div>
+                    <div > P : 60423432</div>
+                </div>
+            </div>
+            <br />
+            <div className="line"></div>
+            <br />
+            <div className="row2">
+                <div className="row3">
+                    <div className="row32">
+                        <div> INV2241 </div>
+                        <div> 8 Agu 2018 </div>
+                        <div> 6 Days </div>
+                        <div> 14 Agu 2018 </div>
+                    </div>
+                    <div className="row31">
 
-    }
+                        <div> Number  </div>
+                        <div> Date  </div>
+                        <div> Terms </div>
+                        <div> Due </div>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <br />
+            <div className="row2">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th style={{ width: '10%', textAlign: "center" }}>Amount</th>
+                            <th style={{ width: '5%', textAlign: "center" }}>Qty</th>
+                            <th style={{ width: '5%', textAlign: "center" }}>Price</th>
+                            <th style={{ width: '70%', paddingLeft: "10px", textAlign: "left" }}>Description</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        {productList.map((product: any) => {
+                            return (
+                                <tr key={product.id}>
+                                    <td>{product.quantity * product.price}</td>
+                                    <td>{product.quantity}</td>
+                                    <td>${product.price}</td>
+                                    <td style={{ paddingLeft: "10px", textAlign: "left" }}>
+                                        {product.name}
+                                        <br />
+                                        <span style={{ color: 'darkolivegreen' }}>{product.description}</span>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <br />
+            <div className="row4">
+                <div className="row41">
+                    <div >
+                        ${SubTotal()}
+                    </div>
+                    <div >
+                        Subtotal
+                    </div>
+
+                </div>
+                <div className="row41">
+                    <div >
+                        ${SubTotal() * 5 / 100}
+                    </div>
+                    <div >
+                        Tax(5%)
+                    </div>
+
+                </div>
+                <div className="row41">
+                    <div >
+                        ${((SubTotal() * 5 / 100) + SubTotal())}
+                    </div>
+                    <div >
+                        Total
+                    </div>
+
+                </div>
+                <div className="row41 Balance">
+                    <div >
+                        ${((SubTotal() * 5 / 100) + SubTotal())}
+                    </div>
+                    <div  >
+                        Balance Due
+                    </div>
+
+                </div>
+                <br />
+                <div className="line"></div>
+                <div className="row2">
+                    Thank you for Your Business
+                </div>
+            </div>
+        </div>)
 }
-
-CreateFactor.propTypes = {
-    Dic: PropTypes.object.isRequired,
-}
-const mapStateToProps = (state: any) => ({
-    Dic: getDictionary(state.dictionary),
-    Auth: getAuth(state.AuthRedux)
-});
-export default
-    connect(
-        mapStateToProps
-    )(CreateFactor);

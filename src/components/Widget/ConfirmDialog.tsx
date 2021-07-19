@@ -37,10 +37,10 @@ export default function ConfirmDialog(props: Iprops) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={e => handleClose(true)} color="primary" style={{fontSize:"15px"}}>
-                    تایید
+                   Ok
                 </Button>
                 <Button onClick={e => handleClose(false)} color="primary" autoFocus style={{fontSize:"15px"}}>
-                   انصراف
+                  Cancel
                 </Button>
             </DialogActions>
         </Dialog>

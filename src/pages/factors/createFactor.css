@@ -60,3 +60,27 @@
     background-color: #455963;
     color: white;
 }
+tr{
+    font-size: 15pt;
+   
+}
+td{
+    text-align: center;
+    color: black;
+    border-bottom: 1px solid black;
+}
+.row4{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    flex-direction:column;
+    line-height:3
+}
+.row41{
+    display: flex;
+    width: 25%;
+    justify-content: space-around;
+}
+.Balance{
+    font-weight: bolder;
+}

@@ -2,7 +2,7 @@ import axios from 'axios'
 import jwtDecode from 'jwt-decode';
 setHeaderAxios();
 
-const apiUrl ="http://localhost/laravel/public"; //process.env.REACT_APP_API_URL;
+const apiUrl ="http://localhost"; //process.env.REACT_APP_API_URL;
 export function getToken() {
     return localStorage.getItem('x-access-token');
 }

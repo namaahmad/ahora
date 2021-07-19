@@ -14,8 +14,9 @@ import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import { useLayoutState } from "../../context/LayoutContext";
 // pages
-const Factor = React.lazy(() => import('../../pages/factors/factor'));
-const CreateFactor = React.lazy(() => import('../../pages/factors/CreateFactor'));
+const Factor = React.lazy(() => import('../../pages/factors/createFactor'));
+const CreateProduct = React.lazy(() => import('../../pages/products/CreateProduct'));
+const Products = React.lazy(() => import('../../pages/products/Products'));
 // context
 
 const loading = () => <Loader />;
@@ -42,7 +43,8 @@ const Layout: React.SFC<RouteComponentProps> = (props: any) => {
           <React.Suspense fallback={loading()}>
             <Switch>
               <Route path="/app/factor" exact={true} component={Factor} />
-              <Route path="/app/factor/create" exact={true} component={CreateFactor} />
+              <Route path="/app/products/create" exact={true} component={CreateProduct} />
+              <Route path="/app/products" exact={true} component={Products} />
             </Switch>
           </React.Suspense>
         </div>

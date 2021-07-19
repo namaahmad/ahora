@@ -4,7 +4,8 @@ import { Drawer, IconButton, List } from "@material-ui/core";
 import {
   ViewQuilt as ViewQuiltIcon,
   ArrowBack as ArrowBackIcon,
-  AddCircle as AddCircleIcon
+  AddCircle as AddCircleIcon,
+  Apps as AppsIcon
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -54,17 +55,25 @@ function Sidebar({ location }: { location: any }) {
     },
     {
       id: 3,
-      label:"فاکتور",
+      label:"Factor",
       showMenu: true,
       link: "/app/factor",
       icon: <ViewQuiltIcon />,
       
     },
     {
-      id: 4,
-      label:"محصول جدید",
+      id: 5,
+      label:"Products",
       showMenu: true,
-      link: "/app/factor/create",
+      link: "/app/products",
+      icon: <AppsIcon />,
+      
+    },
+    {
+      id: 4,
+      label:"Create Product",
+      showMenu: true,
+      link: "/app/products/create",
       icon: <AddCircleIcon />,
       
     },

@@ -184,7 +184,7 @@ export default function CustomTable(props: any) {
                                         align={column.align}
                                         style={{ minWidth: column?.minWidth }}
                                     >
-                                        {permissions.includes(column.permission) && column.label}
+                                        { column.label}
                                     </TableCell>)
                                 default:
                                     return (<TableCell
@@ -228,9 +228,9 @@ export default function CustomTable(props: any) {
                                         </TableCell>
                                     case 'delete':
                                         return <TableCell key={index} align={column.align ? column.align : "left"}>
-                                            {permissions.includes(column.permission) &&
+                                            
                                                 <IconButton onClick={e => onRowDelete(row)}><DeleteIcon /></IconButton>
-                                            }
+                                            
                                         </TableCell>
 
                                     default:
@@ -251,7 +251,7 @@ export default function CustomTable(props: any) {
                         </TableRow>
                     )}
                 </TableBody>
-                <TableFooter>
+                {/* <TableFooter>
                     <TableRow>
                         <TablePagination
                             {...props}
@@ -264,12 +264,12 @@ export default function CustomTable(props: any) {
                                 inputProps: { 'aria-label': dic.rowsPerPage },
                                 native: true,
                             }}
-                            onChangePage={handleChangePage}
+                            onPageChange={handleChangePage}
                             onChangeRowsPerPage={handleChangeRowsPerPage}
                             ActionsComponent={TablePaginationActions}
                         />
                     </TableRow>
-                </TableFooter>
+                </TableFooter> */}
             </Table>
         </TableContainer>
     );
